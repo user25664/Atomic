@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATOMIC — All About the Bomb</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Oswald:wght@300;400;600&family=Libre+Baskerville:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f0e8;
+    --ink: #1a1a14;
+    --rule: #c8c0a8;
+    --red: #8b1a1a;
+    --fade: #6a6458;
+    --paper: #ede8dc;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Libre Baskerville', serif;
+  }
+
+  header {
+    border-bottom: 2px solid var(--ink);
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .site-title {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+  }
+
+  nav a {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--fade);
+    text-decoration: none;
+    margin-left: 2rem;
+    letter-spacing: 0.1em;
+  }
+  nav a:hover { color: var(--ink); }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 90vh;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .hero-text {
+    padding: 5rem 3rem;
+    border-right: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .eyebrow {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--fade);
+    margin-bottom: 1.5rem;
+  }
+
+  h1 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: clamp(4rem, 8vw, 7rem);
+    line-height: 0.9;
+    letter-spacing: -0.01em;
+    margin-bottom: 2rem;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--red);
+  }
+
+  .hero-desc {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--fade);
+    max-width: 38ch;
+    border-left: 2px solid var(--ink);
+    padding-left: 1rem;
+  }
+
+  .hero-diagram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    background: var(--paper);
+    position: relative;
+  }
+
+  .hero-diagram::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--rule) 1px, transparent 1px),
+      linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.4;
+  }
+
+  .section {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .section-label {
+    padding: 4rem 3rem;
+    border-right: 1px solid var(--rule);
+    position: sticky;
+    top: 0;
+    align-self: start;
+  }
+
+  .section-num {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--fade);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-label h2 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 300;
+    font-size: 1.6rem;
+    line-height: 1.2;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .section-label h2 strong {
+    font-weight: 600;
+    display: block;
+  }
+
+  .section-body { padding: 4rem 3rem; }
+
+  p {
+    font-size: 0.95rem;
+    line-height: 1.85;
+    color: #3a3830;
+    margin-bottom: 1.2rem;
+  }
+
+  .diagram-block {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 2rem;
+    margin: 2rem 0;
+  }
+
+  .diagram-caption {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--fade);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 0.75rem;
+  }
+
+  .timeline { margin: 2rem 0; }
+
+  .t-row {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .t-date {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--red);
+    padding-top: 0.15rem;
+  }
+
+  .t-content h3 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .t-content p { margin: 0; font-size: 0.88rem; }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--rule);
+    margin: 2rem 0;
+  }
+
+  .stat {
+    padding: 1.5rem;
+    border-right: 1px solid var(--rule);
+    text-align: center;
+  }
+  .stat:last-child { border-right: none; }
+
+  .stat-n {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 1.8rem;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .stat-l {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--fade);
+    letter-spacing: 0.05em;
+  }
+
+  blockquote {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+  }
+
+  blockquote p {
+    font-style: italic;
+    font-size: 1.05rem;
+    margin-bottom: 0.75rem;
+    color: var(--ink);
+  }
+
+  blockquote cite {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--fade);
+    letter-spacing: 0.1em;
+  }
+
+  footer {
+    padding: 2rem 3rem;
+    border-top: 2px solid var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--fade);
+    letter-spacing: 0.1em;
+  }
+
+  @media (max-width: 700px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-diagram { display: none; }
+    .section { grid-template-columns: 1fr; }
+    .section-label { position: static; border-right: none; border-bottom: 1px solid var(--rule); padding: 2rem; }
+    .section-body { padding: 2rem; }
+    header { padding: 1rem 1.5rem; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .hero-text { padding: 3rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="site-title">Atomic — A History Project</div>
+  <nav>
+    <a href="#science">The Science</a>
+    <a href="#project">The Project</a>
+    <a href="#weapons">The Bombs</a>
+    <a href="#aftermath">What Happened After</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <div class="hero-text">
+    <div class="eyebrow">1939 — 1945 &nbsp;·&nbsp; World War II &nbsp;·&nbsp; By a 6th Grader</div>
+    <h1>THE<br><em>ATOMIC</em><br>BOMB</h1>
+    <p class="hero-desc">How a bunch of secret scientists and the military built the biggest, most destructive weapon ever.
+      and totally changed the world.</p>
+  </div>
+  <div class="hero-diagram">
+    <svg viewBox="0 0 400 400" width="340" xmlns="http://www.w3.org/2000/svg" style="position:relative;z-index:1;">
+      <text x="200" y="22" font-family="'Share Tech Mono',monospace" font-size="9" fill="#6a6458" text-anchor="middle" letter-spacing="3">IMPLOSION DEVICE - MK-III "FAT MAN"</text>
+      <line x1="40" y1="28" x2="360" y2="28" stroke="#c8c0a8" stroke-width="0.5"/>
+      <ellipse cx="200" cy="210" rx="140" ry="110" fill="none" stroke="#1a1a14" stroke-width="1.2"/>
+      <line x1="60" y1="210" x2="340" y2="210" stroke="#1a1a14" stroke-width="0.6" stroke-dasharray="5,4"/>
+      <path d="M 60,210 Q 30,210 45,175 Q 55,150 60,145" fill="none" stroke="#1a1a14" stroke-width="1.2"/>
+      <path d="M 60,210 Q 30,210 45,245 Q 55,270 60,275" fill="none" stroke="#1a1a14" stroke-width="1.2"/>
+      <rect x="330" y="177" width="35" height="66" fill="none" stroke="#1a1a14" stroke-width="1"/>
+      <polygon points="330,177 365,177 365,155 330,165" fill="none" stroke="#1a1a14" stroke-width="1"/>
+      <polygon points="330,243 365,243 365,265 330,255" fill="none" stroke="#1a1a14" stroke-width="1"/>
+      <ellipse cx="200" cy="210" rx="100" ry="78" fill="none" stroke="#1a1a14" stroke-width="0.8" stroke-dasharray="3,3"/>
+      <text x="310" y="148" font-family="'Share Tech Mono',monospace" font-size="7.5" fill="#6a6458">← EXP. LENSES</text>
+      <line x1="306" y1="150" x2="284" y2="168" stroke="#c8c0a8" stroke-width="0.7"/>
+      <ellipse cx="200" cy="210" rx="80" ry="62" fill="none" stroke="#6a6458" stroke-width="0.8"/>
+      <text x="108" y="283" font-family="'Share Tech Mono',monospace" font-size="7.5" fill="#6a6458">AL. SHELL →</text>
+      <line x1="140" y1="279" x2="152" y2="268" stroke="#c8c0a8" stroke-width="0.7"/>
+      <ellipse cx="200" cy="210" rx="56" ry="44" fill="none" stroke="#8b1a1a" stroke-width="0.9" stroke-dasharray="2,2"/>
+      <text x="56" y="183" font-family="'Share Tech Mono',monospace" font-size="7.5" fill="#8b1a1a">TAMPER →</text>
+      <line x1="97" y1="181" x2="148" y2="188" stroke="#c8c0a8" stroke-width="0.7"/>
+      <circle cx="200" cy="210" r="18" fill="none" stroke="#1a1a14" stroke-width="1.5"/>
+      <circle cx="200" cy="210" r="6" fill="#1a1a14"/>
+      <text x="200" y="238" font-family="'Share Tech Mono',monospace" font-size="7.5" fill="#8b1a1a" text-anchor="middle">Pu-239 CORE</text>
+      <line x1="200" y1="235" x2="200" y2="229" stroke="#c8c0a8" stroke-width="0.7"/>
+      <text x="215" y="213" font-family="'Share Tech Mono',monospace" font-size="6.5" fill="#6a6458">INIT.</text>
+      <line x1="60" y1="340" x2="160" y2="340" stroke="#1a1a14" stroke-width="1"/>
+      <line x1="60" y1="335" x2="60" y2="345" stroke="#1a1a14" stroke-width="1"/>
+      <line x1="160" y1="335" x2="160" y2="345" stroke="#1a1a14" stroke-width="1"/>
+      <text x="110" y="356" font-family="'Share Tech Mono',monospace" font-size="7" fill="#6a6458" text-anchor="middle">~60 INCHES</text>
+      <path d="M 40,40 L 40,50 M 40,40 L 50,40" stroke="#c8c0a8" stroke-width="1" fill="none"/>
+      <path d="M 360,40 L 360,50 M 360,40 L 350,40" stroke="#c8c0a8" stroke-width="1" fill="none"/>
+      <path d="M 40,380 L 40,370 M 40,380 L 50,380" stroke="#c8c0a8" stroke-width="1" fill="none"/>
+      <path d="M 360,380 L 360,370 M 360,380 L 350,380" stroke="#c8c0a8" stroke-width="1" fill="none"/>
+      <text x="360" y="380" font-family="'Share Tech Mono',monospace" font-size="7" fill="#c8c0a8" text-anchor="end">FIG. 1</text>
+    </svg>
+  </div>
+</div>
+
+<div class="section" id="science">
+  <div class="section-label">
+    <span class="section-num">01 / 04</span>
+    <h2><strong>Splitting</strong> Atoms</h2>
+  </div>
+  <div class="section-body">
+    <p>Way back in 1905, Albert Einstein came up with his famous equation <strong>E = mc²</strong>. It basically meant that a tiny piece of matter could turn into a massive amount of energy. But for a really long time, nobody actually knew how to do it in real life.</p>
+    <p>Then in 1938, some scientists in Germany figured out that if you shoot tiny particles called neutrons at a heavy metal called uranium, the atom splits right in half! A scientist named Lise Meitner called this <em>fission</em>. When the atom splits, it releases energy and even more neutrons.</p>
+    <p>Those extra neutrons then smash into other uranium atoms, splitting them too. This creates a huge chain reaction. If you get enough of this material together at once (they call it a "critical mass"), it doesn't just get hot. it makes a giant, crazy explosion.</p>
+
+    <div class="diagram-block">
+      <div class="diagram-caption">Fig. 2 — A simple chain reaction</div>
+      <svg viewBox="0 0 500 200" width="100%" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#1a1a14"/>
+          </marker>
+        </defs>
+        <circle cx="30" cy="100" r="5" fill="none" stroke="#1a1a14" stroke-width="1.2"/>
+        <text x="30" y="120" font-family="'Share Tech Mono',monospace" font-size="7" fill="#6a6458" text-anchor="middle">n</text>
+        <line x1="36" y1="100" x2="68" y2="100" stroke="#1a1a14" stroke-width="1" marker-end="url(#arr)"/>
+        <circle cx="90" cy="100" r="22" fill="none" stroke="#8b1a1a" stroke-width="1.2"/>
+        <text x="90" y="104" font-family="'Share Tech Mono',monospace" font-size="7.5" fill="#8b1a1a" text-anchor="middle">U-235</text>
+        <line x1="114" y1="100" x2="148" y2="100" stroke="#1a1a14" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#arr)"/>
+        <text x="131" y="94" font-family="'Share Tech Mono',monospace" font-size="7" fill="#6a6458" text-anchor="middle">SPLIT</text>
+        <ellipse cx="185" cy="82" rx="18" ry="12" fill="none" stroke="#1a1a14" stroke-width="1"/>
+        <text x="185" y="86" font-family="'Share Tech Mono',monospace" font-size="6.5" fill="#1a1a14" text-anchor="middle">Kr-92</text>
+        <ellipse cx="185" cy="118" rx="18" ry="12" fill="none" stroke="#1a1a14" stroke-width="1"/>
+        <text x="185" y="122" font-family="'Share Tech Mono',monospace" font-size="6.5" fill="#1a1a14" text-anchor="middle">Ba-141</text>
+        <text x="185" y="102" font-family="'Share Tech Mono',monospace" font-size="8" fill="#8b1a1a" text-anchor="middle">+</text>
+        <line x1="204" y1="78" x2="240" y2="60" stroke="#1a1a14" stroke-width="0.8" marker-end="url(#arr)"/>
+        <line x1="204" y1="100" x2="242" y2="100" stroke="#1a1a14" stroke-width="0.8" marker-end="url(#arr)"/>
+        <line x1="204" y1="122" x2="240" y2="140" stroke="#1a1a14" stroke-width="0.8" marker-end="url(#arr)"/>
+        <circle cx="248" cy="58" r="4" fill="none" stroke="#1a1a14" stroke-width="1"/>
+        <circle cx="248" cy="100" r="4" fill="none" stroke="#1a1a14" stroke-width="1"/>
+        <circle cx="248" cy="142" r="4" fill="none" stroke="#1a1a14" stroke-width="1"/>
+        <text x="258" y="62" font-family="'Share Tech Mono',monospace" font-size="6.5" fill="#6a6458">n</text>
+        <text x="258" y="104" font-family="'Share Tech Mono',monospace" font-size="6.5" fill="#6a6458">n</text>
+        <text x="258" y="146" font-family="'Share Tech Mono',monospace" font-size="6.5" fill="#6a6458">n</text>
+        <line x1="268" y1="58" x2="296" y2="50" stroke="#1a1a14" stroke-width="0.8" marker-end="url(#arr)"/>
+        <line x1="268" y1="100" x2="296" y2="100" stroke="#1a1a14" stroke-width="0.8" marker-end="url(#arr)"/>
+        <line x1="268" y1="142" x2="296" y2="150" stroke="#1a1a14" stroke-width="0.8" marker-end="url(#arr)"/>
+        <circle cx="316" cy="50" r="14" fill="none" stroke="#8b1a1a" stroke-width="1"/>
+        <circle cx="316" cy="100" r="14" fill="none" stroke="#8b1a1a" stroke-width="1"/>
+        <circle cx="316" cy="150" r="14" fill="none" stroke="#8b1a1a" stroke-width="1"/>
+        <text x="316" y="53" font-family="'Share Tech Mono',monospace" font-size="6" fill="#8b1a1a" text-anchor="middle">U-235</text>
+        <text x="316" y="103" font-family="'Share Tech Mono',monospace" font-size="6" fill="#8b1a1a" text-anchor="middle">U-235</text>
+        <text x="316" y="153" font-family="'Share Tech Mono',monospace" font-size="6" fill="#8b1a1a" text-anchor="middle">U-235</text>
+        <line x1="330" y1="50" x2="360" y2="50" stroke="#1a1a14" stroke-width="0.6" stroke-dasharray="2,2" marker-end="url(#arr)"/>
+        <line x1="330" y1="100" x2="360" y2="100" stroke="#1a1a14" stroke-width="0.6" stroke-dasharray="2,2" marker-end="url(#arr)"/>
+        <line x1="330" y1="150" x2="360" y2="150" stroke="#1a1a14" stroke-width="0.6" stroke-dasharray="2,2" marker-end="url(#arr)"/>
+        <text x="375" y="54" font-family="'Share Tech Mono',monospace" font-size="7" fill="#8b1a1a">···</text>
+        <text x="375" y="104" font-family="'Share Tech Mono',monospace" font-size="7" fill="#8b1a1a">···</text>
+        <text x="375" y="154" font-family="'Share Tech Mono',monospace" font-size="7" fill="#8b1a1a">···</text>
+      </svg>
+    </div>
+
+    <blockquote>
+      <p>"A chain reaction might be set up if neutrons liberated by fission could cause further fissions in neighboring nuclei."</p>
+      <cite>— Leo Szilárd, a smart physicist, 1933</cite>
+    </blockquote>
+  </div>
+</div>
+
+<div class="section" id="project">
+  <div class="section-label">
+    <span class="section-num">02 / 04</span>
+    <h2>The <strong>Manhattan</strong> Project</h2>
+  </div>
+  <div class="section-body">
+    <p>In 1939, right before World War II, Albert Einstein sent a letter to President Roosevelt warning him that Germany might be building an atomic bomb. So, after Pearl Harbor happened, the U.S. started a massive, top-secret mission called the Manhattan Project.</p>
+    <p>A guy named General Leslie Groves and a scientist named J. Robert Oppenheimer were in charge. They hired over 130,000 people to work in secret towns all over the country. It cost about $2 billion back then, which is like $28 billion today. That is a ton of money!</p>
+
+    <div class="stats-row">
+      <div class="stat"><span class="stat-n">1942</span><span class="stat-l">Started</span></div>
+      <div class="stat"><span class="stat-n">130K</span><span class="stat-l">People worked on it</span></div>
+      <div class="stat"><span class="stat-n">$2B</span><span class="stat-l">Money spent</span></div>
+      <div class="stat"><span class="stat-n">3</span><span class="stat-l">Main secret bases</span></div>
+    </div>
+
+    <p>There were three main secret bases. One in Oak Ridge, Tennessee, one in Hanford, Washington, and a really important lab in Los Alamos, New Mexico, where they actually designed the bombs.</p>
+
+    <div class="timeline">
+      <div class="t-row">
+        <div class="t-date">Dec 1942</div>
+        <div class="t-content">
+          <h3>The First Chain Reaction</h3>
+          <p>A scientist named Enrico Fermi and his team made the first controlled atom-splitting chain reaction under a football stadium in Chicago. This proved the bomb could actually work.</p>
+        </div>
+      </div>
+      <div class="t-row">
+        <div class="t-date">1943–44</div>
+        <div class="t-content">
+          <h3>The Secret Lab</h3>
+          <p>Oppenheimer got the smartest scientists in the world together in the middle of nowhere to build two types of bombs: one using uranium and one using plutonium.</p>
+        </div>
+      </div>
+      <div class="t-row">
+        <div class="t-date">May 1945</div>
+        <div class="t-content">
+          <h3>Germany Quits</h3>
+          <p>Germany gave up in May. We didn't need to use the bomb on them anymore, but the project kept going so they could use it on Japan to end the war.</p>
+        </div>
+      </div>
+      <div class="t-row">
+        <div class="t-date">Jul 16, 1945</div>
+        <div class="t-content">
+          <h3>The Trinity Test</h3>
+          <p>They tested the very first atomic bomb in the New Mexico desert. The explosion was way bigger than anyone thought it would be. Oppenheimer remembered an old quote: <em>"Now I am become Death, the destroyer of worlds."</em> It was pretty scary.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="weapons">
+  <div class="section-label">
+    <span class="section-num">03 / 04</span>
+    <h2>The Two <strong>Bombs</strong></h2>
+  </div>
+  <div class="section-body">
+    <p>The scientists actually made two completely different types of bombs. They both worked differently, but they were both dropped on Japan just three days apart.</p>
+
+    <div class="diagram-block">
+      <div class="diagram-caption">Fig. 3 — The "Little Boy" bomb (dropped on Hiroshima)</div>
+      <svg viewBox="0 0 520 165" width="100%" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arr2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#1a1a14"/>
+          </marker>
+        </defs>
+        <rect x="40" y="62" width="340" height="38" fill="none" stroke="#1a1a14" stroke-width="1.2" rx="2"/>
+        <path d="M 40,62 Q 10,62 10,81 Q 10,100 40,100" fill="none" stroke="#1a1a14" stroke-width="1.2"/>
+        <rect x="380" y="55" width="60" height="52" fill="none" stroke="#1a1a14" stroke-width="1"/>
+        <polygon points="380,55 440,55 440,35 380,47" fill="none" stroke="#1a1a14" stroke-width="1"/>
+        <polygon points="380,107 440,107 440,127 380,115" fill="none" stroke="#1a1a14" stroke-width="1"/>
+        <line x1="10" y1="81" x2="440" y2="81" stroke="#1a1a14" stroke-width="0.5" stroke-dasharray="4,3"/>
+        <rect x="320" y="67" width="55" height="28" fill="none" stroke="#6a6458" stroke-width="0.8" stroke-dasharray="2,2"/>
+        <text x="347" y="84" font-family="'Share Tech Mono',monospace" font-size="7" fill="#6a6458" text-anchor="middle">CORDITE</text>
+        <rect x="240" y="68" width="75" height="26" fill="none" stroke="#8b1a1a" stroke-width="1"/>
+        <text x="277" y="84" font-family="'Share Tech Mono',monospace" font-size="7" fill="#8b1a1a" text-anchor="middle">U-235 TARGET</text>
+        <ellipse cx="100" cy="81" rx="28" ry="16" fill="none" stroke="#8b1a1a" stroke-width="1.2"/>
+        <text x="100" y="85" font-family="'Share Tech Mono',monospace" font-size="7" fill="#8b1a1a" text-anchor="middle">U-235 INSERT</text>
+        <line x1="220" y1="81" x2="135" y2="81" stroke="#1a1a14" stroke-width="0.8" marker-end="url(#arr2)"/>
+        <text x="177" y="75" font-family="'Share Tech Mono',monospace" font-size="6.5" fill="#6a6458" text-anchor="middle">FIRES →</text>
+        <line x1="100" y1="64" x2="100" y2="44" stroke="#c8c0a8" stroke-width="0.7"/>
+        <text x="100" y="40" font-family="'Share Tech Mono',monospace" font-size="7" fill="#6a6458" text-anchor="middle">SUBCRITICAL</text>
+        <line x1="277" y1="67" x2="277" y2="47" stroke="#c8c0a8" stroke-width="0.7"/>
+        <text x="277" y="43" font-family="'Share Tech Mono',monospace" font-size="7" fill="#6a6458" text-anchor="middle">SUBCRITICAL</text>
+        <text x="190" y="130" font-family="'Share Tech Mono',monospace" font-size="7" fill="#8b1a1a" text-anchor="middle">COMBINED = CRITICAL MASS → DETONATION</text>
+        <text x="10" y="152" font-family="'Share Tech Mono',monospace" font-size="6.5" fill="#6a6458">LENGTH: 120 IN &nbsp;·&nbsp; WEIGHT: 9,700 LB &nbsp;·&nbsp; YIELD: ~15 KT &nbsp;·&nbsp; FISSILE: URANIUM-235</text>
+      </svg>
+    </div>
+
+    <p>The first bomb was called "Little Boy". It worked kind of like a gun inside a tube. It shot one piece of uranium into another piece. When they smashed together, it made a critical mass and exploded. It was a simple idea, but uranium was super hard to make.</p>
+
+    <div class="diagram-block">
+      <div class="diagram-caption">Fig. 4 — The "Fat Man" bomb (dropped on Nagasaki)</div>
+      <svg viewBox="0 0 520 225" width="100%" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="redarr" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
+            <path d="M0,0 L5,2.5 L0,5 Z" fill="#8b1a1a"/>
+          </marker>
+        </defs>
+        <text x="220" y="18" font-family="'Share Tech Mono',monospace" font-size="7.5" fill="#6a6458" text-anchor="middle">CROSS-SECTION (SCHEMATIC)</text>
+        <ellipse cx="220" cy="118" rx="130" ry="90" fill="none" stroke="#1a1a14" stroke-width="1.2"/>
+        <ellipse cx="220" cy="118" rx="105" ry="73" fill="none" stroke="#6a6458" stroke-width="0.8" stroke-dasharray="3,4"/>
+        <g stroke="#1a1a14" stroke-width="0.7" fill="none">
+          <line x1="220" y1="45" x2="220" y2="118"/>
+          <line x1="282" y1="59" x2="220" y2="118"/>
+          <line x1="325" y1="100" x2="220" y2="118"/>
+          <line x1="325" y1="136" x2="220" y2="118"/>
+          <line x1="282" y1="177" x2="220" y2="118"/>
+          <line x1="220" y1="191" x2="220" y2="118"/>
+          <line x1="158" y1="177" x2="220" y2="118"/>
+          <line x1="115" y1="136" x2="220" y2="118"/>
+          <line x1="115" y1="100" x2="220" y2="118"/>
+          <line x1="158" y1="59" x2="220" y2="118"/>
+        </g>
+        <ellipse cx="220" cy="118" rx="70" ry="48" fill="none" stroke="#6a6458" stroke-width="1"/>
+        <ellipse cx="220" cy="118" rx="48" ry="33" fill="none" stroke="#8b1a1a" stroke-width="0.9" stroke-dasharray="2,2"/>
+        <circle cx="220" cy="118" r="14" fill="none" stroke="#8b1a1a" stroke-width="1.4"/>
+        <circle cx="220" cy="118" r="4" fill="#1a1a14"/>
+        <text x="228" y="121" font-family="'Share Tech Mono',monospace" font-size="6" fill="#1a1a14">INIT.</text>
+        <line x1="90" y1="118" x2="350" y2="118" stroke="#1a1a14" stroke-width="0.5" stroke-dasharray="3,3"/>
+        <line x1="220" y1="28" x2="220" y2="208" stroke="#1a1a14" stroke-width="0.5" stroke-dasharray="3,3"/>
+        <line x1="350" y1="118" x2="382" y2="93" stroke="#c8c0a8" stroke-width="0.7"/>
+        <text x="384" y="91" font-family="'Share Tech Mono',monospace" font-size="7" fill="#6a6458">OUTER CASING</text>
+        <line x1="325" y1="108" x2="382" y2="73" stroke="#c8c0a8" stroke-width="0.7"/>
+        <text x="384" y="71" font-family="'Share Tech Mono',monospace" font-size="7" fill="#6a6458">EXP. LENSES</text>
+        <line x1="290" y1="118" x2="382" y2="118" stroke="#c8c0a8" stroke-width="0.7"/>
+        <text x="384" y="121" font-family="'Share Tech Mono',monospace" font-size="7" fill="#6a6458">AL. SHELL</text>
+        <line x1="268" y1="118" x2="382" y2="143" stroke="#c8c0a8" stroke-width="0.7"/>
+        <text x="384" y="146" font-family="'Share Tech Mono',monospace" font-size="7" fill="#8b1a1a">U TAMPER</text>
+        <line x1="234" y1="118" x2="382" y2="168" stroke="#c8c0a8" stroke-width="0.7"/>
+        <text x="384" y="171" font-family="'Share Tech Mono',monospace" font-size="7" fill="#8b1a1a">Pu-239 CORE</text>
+        <g stroke="#8b1a1a" stroke-width="0.8" fill="none">
+          <line x1="220" y1="51" x2="220" y2="67" marker-end="url(#redarr)"/>
+          <line x1="316" y1="82" x2="302" y2="92" marker-end="url(#redarr)"/>
+          <line x1="340" y1="118" x2="322" y2="118" marker-end="url(#redarr)"/>
+          <line x1="316" y1="154" x2="302" y2="144" marker-end="url(#redarr)"/>
+          <line x1="220" y1="185" x2="220" y2="169" marker-end="url(#redarr)"/>
+          <line x1="124" y1="154" x2="138" y2="144" marker-end="url(#redarr)"/>
+          <line x1="100" y1="118" x2="118" y2="118" marker-end="url(#redarr)"/>
+          <line x1="124" y1="82" x2="138" y2="92" marker-end="url(#redarr)"/>
+        </g>
+        <text x="10" y="215" font-family="'Share Tech Mono',monospace" font-size="6.5" fill="#6a6458">LENGTH: 128 IN &nbsp;·&nbsp; WEIGHT: 10,213 LB &nbsp;·&nbsp; YIELD: ~21 KT &nbsp;·&nbsp; FISSILE: PLUTONIUM-239</text>
+      </svg>
+    </div>
+
+    <p>The second bomb was called "Fat Man". This one was way more complicated. It used a ball of plutonium surrounded by regular explosives. When those explosives blew up, they squished the plutonium ball inward super fast, causing a huge nuclear explosion.</p>
+  </div>
+</div>
+
+<div class="section" id="aftermath">
+  <div class="section-label">
+    <span class="section-num">04 / 04</span>
+    <h2>What Happened <strong>After</strong></h2>
+  </div>
+  <div class="section-body">
+    <p>The U.S. dropped Little Boy on the city of Hiroshima on August 6, 1945. It instantly killed around 70,000 to 80,000 people. Then, three days later, they dropped Fat Man on Nagasaki and killed about 40,000 more. Japan finally gave up on August 15, and World War II was over.</p>
+
+    <div class="stats-row">
+      <div class="stat"><span class="stat-n" style="color:var(--red)">~140K</span><span class="stat-l">People died in Hiroshima</span></div>
+      <div class="stat"><span class="stat-n" style="color:var(--red)">~80K</span><span class="stat-l">People died in Nagasaki</span></div>
+      <div class="stat"><span class="stat-n">Sep 2</span><span class="stat-l">Japan finally gave up</span></div>
+      <div class="stat"><span class="stat-n">12,500</span><span class="stat-l">Nukes in the world today</span></div>
+    </div>
+
+    <p>The people who survived the blasts are called <em>hibakusha</em> in Japanese. They had a really tough time. A lot of them got super sick from radiation and cancer later on. This was the only time nuclear bombs were ever used in a war, and people still argue today about whether it was the right thing to do.</p>
+    <p>After that, the whole world changed. A few years later, the Soviet Union built their own bomb. This started the Cold War, where the U.S. and the Soviet Union just kept building more and more bombs to scare each other. At one point, they had over 60,000 of them!</p>
+    <p>Today, there are nine countries that have nuclear weapons. There are rules now trying to stop other countries from getting them. Hiroshima and Nagasaki have big memorials now to remind everyone how terrible these weapons are for regular people, not just in war.</p>
+
+    <blockquote>
+      <p>"The release of atomic energy has not created a new problem. It has merely made more urgent the necessity of solving an existing one."</p>
+      <cite>— Albert Einstein, 1945</cite>
+    </blockquote>
+  </div>
+</div>
+
+<footer>
+  <span>ATOMIC — AN EDUCATIONAL RESOURCE FOR HISTORICAL STUDY</span>
+  <span>1939 - 1945 &nbsp;·&nbsp; WWII NUCLEAR HISTORY</span>
+</footer>
+
+</body>
+</html>
